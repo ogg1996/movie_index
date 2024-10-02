@@ -16,7 +16,7 @@ export default function MovieCard({ movieData }) {
         className="h-[300px] hover:opacity-50"
       ></img>
       <div className="self-start font-bold">{movieData.title}</div>
-      <div className="self-end text-[#777777]">{movieData.vote_average}</div>
+      <div className="self-end text-[#777777]">⭐ {movieData.vote_average}</div>
     </div>
   );
 }
