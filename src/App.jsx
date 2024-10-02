@@ -5,12 +5,12 @@ import MovieDetail from "./pages/MovieDetail";
 
 function App() {
   return (
-    <div className="w-[100%] flex flex-col items-center">
+    <>
       <Routes>
         <Route path={"/"} element={<Home />} />
-        <Route path={"/detail"} element={<MovieDetail />} />
+        <Route path={"/detail/:id"} element={<MovieDetail />} />
       </Routes>
-    </div>
+    </>
   );
 }
 
