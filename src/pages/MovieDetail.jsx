@@ -7,21 +7,20 @@ export default function MovieDetail() {
   const param = useParams();
   const movieId = param.id;
 
+  const { VITE_TMDB_API_BASE_URL, VITE_TMDB_API_KEY } = import.meta.env;
+
   useEffect(() => {
     fetch(
-      `${import.meta.env.VITE_TMDB_API_BASE_URL}/movie/${movieId}?api_key=${
-        import.meta.env.VITE_TMDB_API_KEY
-      }&language=ko-KR`
+      `${VITE_TMDB_API_BASE_URL}/movie/${movieId}?api_key=${VITE_TMDB_API_KEY}&language=ko-KR`
     )
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         setMovieDetailData(res);
       });
   }, []);
 
   return (
-    <div className="w-[100%] flex flex-col items-center">
+    <div className="w-[100%] flex flex-col items-center pt-[56px]">
       {!movieDetailData ? (
         <div className="text-[50px] font-bold">Loading...</div>
       ) : (
@@ -30,7 +29,7 @@ export default function MovieDetail() {
             src={`${import.meta.env.VITE_TMDB_API_IMG_BASE_URL}${
               movieDetailData.poster_path
             }`}
-            className="w-[50%]"
+            className="w-[400px]"
           />
           <div className="p-[10px] flex flex-col gap-[20px]">
             <div className="flex items-center">
@@ -38,7 +37,8 @@ export default function MovieDetail() {
                 {movieDetailData.title}
               </div>
               <div className="grow text-[20px] text-right text-[#777777]">
-                ⭐{movieDetailData.vote_average}
+                👍 {Math.floor(movieDetailData.popularity)} ⭐
+                {movieDetailData.vote_average}
               </div>
             </div>
             <div>
