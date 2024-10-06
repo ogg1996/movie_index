@@ -1,34 +1,23 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useFetchMovieDetailData } from "../hooks/useFetchMovieDetailData";
 
 export default function MovieDetail() {
   // 데이터를 담을 상태
-  const [movieDetailData, setMovieDetailData] = useState();
   const param = useParams();
-  const movieId = param.id;
 
-  const { VITE_TMDB_API_BASE_URL, VITE_TMDB_API_KEY } = import.meta.env;
+  const { data: movieDetailData, loading: movieDetailLoading } =
+    useFetchMovieDetailData(param.id);
 
-  useEffect(() => {
-    fetch(
-      `${VITE_TMDB_API_BASE_URL}/movie/${movieId}?api_key=${VITE_TMDB_API_KEY}&language=ko-KR`
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        setMovieDetailData(res);
-      });
-  }, []);
+  const { VITE_TMDB_API_IMG_BASE_URL } = import.meta.env;
 
   return (
     <div className="w-[100%] flex flex-col items-center pt-[56px]">
-      {!movieDetailData ? (
+      {movieDetailLoading ? (
         <div className="text-[50px] font-bold">Loading...</div>
       ) : (
         <div className="max-w-[940px] pt-[40px] flex">
           <img
-            src={`${import.meta.env.VITE_TMDB_API_IMG_BASE_URL}${
-              movieDetailData.poster_path
-            }`}
+            src={`${VITE_TMDB_API_IMG_BASE_URL}${movieDetailData.poster_path}`}
             className="w-[400px]"
           />
           <div className="p-[10px] flex flex-col gap-[20px]">

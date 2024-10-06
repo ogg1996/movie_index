@@ -5,6 +5,7 @@ import MovieDetail from "./pages/MovieDetail";
 import NavBar from "./components/NavBar";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import Search from "./pages/Search";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path={"/detail/:id"} element={<MovieDetail />} />
         <Route path={"/login"} element={<Login />} />
         <Route path={"/signup"} element={<SignUp />} />
+        <Route path={"/Search/:title"} element={<Search />} />
       </Routes>
     </div>
   );
