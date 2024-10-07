@@ -32,7 +32,7 @@ export default function MovieCard({ id }) {
           className="w-[200px] h-[400px] rounded-[10px]
           flex flex-col justify-between animate-pulse"
         >
-          <Skeleton width={200} height={300} />
+          <Skeleton width={200} height={300} borderRadius={10} />
           {/* Skeleton 자체에 플렉스 속성이 사용되지 않아서 스판에 추가.. */}
           <span className="self-start">
             <Skeleton width={150} height={24} />

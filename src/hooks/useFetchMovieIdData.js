@@ -9,7 +9,7 @@ export function useFetchMovieIdData(movieId) {
 
   useEffect(() => {
     fetch(
-      `${VITE_TMDB_API_BASE_URL}/movie/${movieId}?api_key=${VITE_TMDB_API_KEY}&language=ko-KR&include_adult=false`
+      `${VITE_TMDB_API_BASE_URL}/movie/${movieId}?api_key=${VITE_TMDB_API_KEY}&language=ko-KR`
     )
       .then((res) => res.json())
       .then((res) => {

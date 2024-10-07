@@ -6,7 +6,6 @@ import NavBar from "./components/NavBar";
 import Login from "./pages/Login";
 import Join from "./pages/Join";
 import Search from "./pages/Search";
-import smoothscroll from "smoothscroll-polyfill";
 
 function App() {
   return (
@@ -26,7 +25,6 @@ function App() {
         w-[55px] h-[55px] rounded-[50%] bg-black
         fixed z-[999] right-[20px] bottom-[20px]"
         onClick={() => {
-          smoothscroll.polyfill();
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
       >

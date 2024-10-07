@@ -30,12 +30,15 @@ export function useFetchMovieListData() {
 
   function loadMoreContent() {
     fetch(
-      `${VITE_TMDB_API_BASE_URL}/movie/popular?api_key=${VITE_TMDB_API_KEY}&language=ko-KR&include_adult=true&page=${(page.current += 1)}`
+      `${VITE_TMDB_API_BASE_URL}/movie/popular?api_key=${VITE_TMDB_API_KEY}&language=ko-KR&include_adult=false&page=${(page.current += 1)}`
     )
       .then((res) => res.json())
       .then((res) => {
         setData((prev) => [...prev, ...res.results]);
-        setLoading(false);
+        // 로딩을 보여주기 위해 딜레이
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
       })
       .catch((err) => setError(err));
   }

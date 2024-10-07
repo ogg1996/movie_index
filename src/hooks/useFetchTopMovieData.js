@@ -14,7 +14,10 @@ export function useFetchTopMovieData() {
       .then((res) => res.json())
       .then((res) => {
         setData(res.results);
-        setLoading(false);
+        // 로딩을 보여주기 위해 딜레이
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
       })
       .catch((err) => setError(err));
   }, []);

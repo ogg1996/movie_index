@@ -5,7 +5,6 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 export default function MovieDetail() {
-  // 데이터를 담을 상태
   const param = useParams();
 
   const { data, loading } = useFetchMovieIdData(param.id);
@@ -58,8 +57,8 @@ export default function MovieDetail() {
           </>
         ) : (
           <>
-            <div className="self-center w-[100%] max-w-[400px] rounded-[20px]">
-              <Skeleton height={450} />
+            <div className="self-center w-[100%] max-w-[400px]">
+              <Skeleton height={500} borderRadius={20} />
             </div>
             <div
               className={`flex ${
