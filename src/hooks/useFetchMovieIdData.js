@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function useFetchMovieDetailData(movieId) {
+export function useFetchMovieIdData(movieId) {
   const { VITE_TMDB_API_BASE_URL, VITE_TMDB_API_KEY } = import.meta.env;
 
   const [data, setData] = useState([]);
@@ -14,7 +14,10 @@ export function useFetchMovieDetailData(movieId) {
       .then((res) => res.json())
       .then((res) => {
         setData(res);
-        setLoading(false);
+        // skeleton ui 확인을 위해 1초 딜레이를 줌
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
       })
       .catch((err) => setError(err));
   }, []);

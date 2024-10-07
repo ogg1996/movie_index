@@ -4,16 +4,13 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "../styles/swiper.css";
-import { lazy, Suspense } from "react";
-import MovieCardSkeleton from "../components/MovieCardSkeleton";
 import { useFetchTopMovieData } from "../hooks/useFetchTopMovieData";
 import { useWindowWidthSize } from "../hooks/useWindowWidthSize";
 import { useFetchMovieListData } from "../hooks/useFetchMovieListData";
-
-const MovieCard = lazy(() => import("../components/MovieCard"));
+import MovieCard from "../components/MovieCard";
 
 export default function Home() {
-  // top20 영화 랭킹 표기 변수
+  // top20 영화 랭킹 표기
   let ranking = 0;
 
   const { data: topMovieData, loading: topMovieLoading } =
@@ -34,18 +31,17 @@ export default function Home() {
       ) : (
         <Swiper
           modules={[Navigation]}
-          slidesPerView={windowWidth > 840 ? 3 : windowWidth > 600 ? 2 : 1}
-          slidesPerGroup={windowWidth > 840 ? 3 : windowWidth > 600 ? 2 : 1}
-          navigation
+          spaceBetween={0}
+          slidesPerView={windowWidth > 750 ? 3 : windowWidth > 500 ? 2 : 1}
+          slidesPerGroup={windowWidth > 750 ? 3 : windowWidth > 500 ? 2 : 1}
+          navigation={windowWidth > 500 ? false : true}
         >
           {topMovieData.map((el) => (
             <SwiperSlide key={el.id}>
               <div className="text-[30px] font-bold mr-[10px] leading-[30px]">
                 {(ranking += 1)}
               </div>
-              <Suspense fallback={<MovieCardSkeleton />}>
-                <MovieCard movieData={el} />
-              </Suspense>
+              <MovieCard id={el.id} />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -58,9 +54,7 @@ export default function Home() {
       ) : (
         <div className="max-w-[940px] flex flex-wrap gap-[10px] justify-center">
           {movieListData.map((el) => (
-            <Suspense key={el.id} fallback={<MovieCardSkeleton />}>
-              <MovieCard movieData={el} />
-            </Suspense>
+            <MovieCard key={el.id} id={el.id} />
           ))}
         </div>
       )}

@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import MovieDetail from "./pages/MovieDetail";
 import NavBar from "./components/NavBar";
 import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
+import Join from "./pages/Join";
 import Search from "./pages/Search";
 
 function App() {
@@ -15,8 +15,8 @@ function App() {
         <Route path={"/"} element={<Home />} />
         <Route path={"/detail/:id"} element={<MovieDetail />} />
         <Route path={"/login"} element={<Login />} />
-        <Route path={"/signup"} element={<SignUp />} />
-        <Route path={"/Search/:title"} element={<Search />} />
+        <Route path={"/join"} element={<Join />} />
+        <Route path={"/search"} element={<Search />} />
       </Routes>
     </div>
   );

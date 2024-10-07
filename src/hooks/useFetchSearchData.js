@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function useFetchSearchData(param) {
+export function useFetchSearchData(title) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -9,7 +9,7 @@ export function useFetchSearchData(param) {
 
   useEffect(() => {
     fetch(
-      `${VITE_TMDB_API_BASE_URL}/search/movie?api_key=${VITE_TMDB_API_KEY}&query=${param.title}&language=ko-KR&include_adult=false`
+      `${VITE_TMDB_API_BASE_URL}/search/movie?api_key=${VITE_TMDB_API_KEY}&query=${title}&language=ko-KR&include_adult=false`
     )
       .then((res) => res.json())
       .then((res) => {
@@ -17,7 +17,7 @@ export function useFetchSearchData(param) {
         setLoading(false);
       })
       .catch((err) => setError(err));
-  }, [param]);
+  }, [title]);
 
   return { data, loading, error };
 }
