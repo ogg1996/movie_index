@@ -3,6 +3,8 @@ import { useDebounce } from "../hooks/useDebounce";
 import { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import { useWindowWidthSize } from "../hooks/useWindowWidthSize";
+import supabase from "../scripts/supabaseClient";
+import userIcon from "../assets/userIcon.png";
 
 // TODO : 반응형 디자인(보완 예정), 다크모드 라이트 모드 구현(전역 상태 관리)
 export default function NavBar() {
@@ -12,18 +14,33 @@ export default function NavBar() {
   const [searchInput, setSearchInput] = useState("");
   const debounceInput = useDebounce(searchInput);
 
+  const [userInfo, setUserInfo] = useState(null);
+
   const windowWinth = useWindowWidthSize();
 
   const [isClickSearch, setIsClickSearch] = useState(false);
+  const [isClickUserIcon, setIsClickUserIcon] = useState(false);
 
   useEffect(() => {
-    // TODO : 검색어를 전부 지울시 마지막으로 있었던 페이지로 이동(검색 페이지 제외)
     if (debounceInput.trim() === "") {
       navigate("/");
     } else {
       navigate(`/search?title=${debounceInput}`);
     }
   }, [debounceInput]);
+
+  useEffect(() => {
+    supabase.auth.getSession().then((res) => {
+      setUserInfo(res.data.session);
+    });
+  }, [supabase.auth.getSession()]);
+
+  const logout = async () => {
+    await supabase.auth.signOut();
+    setUserInfo(null);
+    setIsClickUserIcon(false);
+    alert("로그아웃 되었습니다");
+  };
 
   return (
     <div
@@ -47,14 +64,6 @@ export default function NavBar() {
       </div>
       <div className="flex">
         <div className="mx-[10px] flex">
-          <div
-            className="text-[24px] cursor-pointer"
-            onClick={() => {
-              setIsClickSearch(!isClickSearch);
-            }}
-          >
-            🔎
-          </div>
           <input
             type="text"
             onChange={(event) => {
@@ -71,29 +80,55 @@ export default function NavBar() {
                 : "w-[160px]"
             }`}
           />
-        </div>
-        <div
-          className={`${isClickSearch ? "hidden" : "flex"} gap-[15px] ${
-            windowWinth > 420 ? "text-[24px]" : "text-[18px]"
-          }`}
-        >
-          <button
+          <div
+            className="text-[24px] cursor-pointer"
             onClick={() => {
-              setSearchInput("");
-              navigate("/login");
+              setIsClickSearch(!isClickSearch);
             }}
           >
-            Login
-          </button>
-          <button
-            onClick={() => {
-              setSearchInput("");
-              navigate("/join");
-            }}
-          >
-            Join
-          </button>
+            🔎
+          </div>
         </div>
+        {userInfo ? (
+          <div>
+            <img
+              src={userIcon}
+              className="w-[36px] cursor-pointer"
+              onClick={() => setIsClickUserIcon(!isClickUserIcon)}
+            />
+            {isClickUserIcon && (
+              <button
+                className="w-[150px] text-[20px] py-[5px] border-t-white fixed top-[58px] right-0 bg-[gray]"
+                onClick={() => logout()}
+              >
+                로그아웃
+              </button>
+            )}
+          </div>
+        ) : (
+          <div
+            className={`${isClickSearch ? "hidden" : "flex"} gap-[15px] ${
+              windowWinth > 420 ? "text-[24px]" : "text-[18px]"
+            }`}
+          >
+            <button
+              onClick={() => {
+                setSearchInput("");
+                navigate("/login");
+              }}
+            >
+              Login
+            </button>
+            <button
+              onClick={() => {
+                setSearchInput("");
+                navigate("/join");
+              }}
+            >
+              Join
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
