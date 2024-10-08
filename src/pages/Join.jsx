@@ -60,13 +60,12 @@ export default function Join() {
           alert("회원가입에 실패하였습니다. 다시 시도해 주세요");
         } else {
           alert("회원가입이 완료 되었습니다");
+          navigate("/");
         }
-      })
-      .catch((err) => console.log(err));
+      });
 
     // 회원 가입후 자동로그인 방지
     await supabase.auth.signOut();
-    navigate("/");
   };
 
   return (
