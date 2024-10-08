@@ -7,14 +7,12 @@ import supabase from "../scripts/supabaseClient";
 import userIcon from "../assets/userIcon.png";
 
 // TODO : 반응형 디자인(보완 예정), 다크모드 라이트 모드 구현(전역 상태 관리)
-export default function NavBar() {
+export default function NavBar({ session }) {
   const navigate = useNavigate();
 
   // TODO : 디테일 페이지로 넘어갈 때 입력창을 초기화 하려면 전역 상태 관리를 해야할까?
   const [searchInput, setSearchInput] = useState("");
   const debounceInput = useDebounce(searchInput);
-
-  const [userInfo, setUserInfo] = useState(null);
 
   const windowWinth = useWindowWidthSize();
 
@@ -29,15 +27,8 @@ export default function NavBar() {
     }
   }, [debounceInput]);
 
-  useEffect(() => {
-    supabase.auth.getSession().then((res) => {
-      setUserInfo(res.data.session);
-    });
-  }, [supabase.auth.getSession()]);
-
   const logout = async () => {
     await supabase.auth.signOut();
-    setUserInfo(null);
     setIsClickUserIcon(false);
     alert("로그아웃 되었습니다");
   };
@@ -89,7 +80,7 @@ export default function NavBar() {
             🔎
           </div>
         </div>
-        {userInfo ? (
+        {session ? (
           <div>
             <img
               src={userIcon}

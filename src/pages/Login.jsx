@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import supabase from "../scripts/supabaseClient";
 
-export default function Login() {
+export default function Login({ setSession }) {
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const email = formData.get("email");
@@ -44,11 +44,31 @@ export default function Login() {
         }
       });
   };
+
+  const handleKakaoLogin = async () => {
+    event.preventDefault(); // 기본 동작 방지
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "kakao",
+      options: {
+        skipBrowserRedirect: true, // 팝업 방식으로 로그인 처리
+      },
+    });
+
+    if (error) {
+      console.error("Error during Kakao login:", error);
+    } else {
+      setSession(data);
+      alert("카카오 로그인");
+      navigate("/");
+    }
+  };
+
   return (
     <form
       className="max-w-[400px] w-[80%] mt-[80px] p-[10px_30px] font-bold
       flex flex-col border-[5px] gap-[20px] rounded-[20px]"
-      onSubmit={handleSubmit}
+      onSubmit={handleLogin}
     >
       <div className="text-[24px]">Login</div>
       <div className="flex flex-col">
@@ -74,6 +94,13 @@ export default function Login() {
         className="bg-gray-300 h-[50px] text-[30px] rounded-[20px] hover:animate-pulse"
       >
         Login
+      </button>
+      <button
+        type="button"
+        onClick={handleKakaoLogin}
+        className="bg-yellow-300 h-[50px] text-[30px] rounded-[20px] hover:animate-pulse"
+      >
+        Kakao Login
       </button>
     </form>
   );
