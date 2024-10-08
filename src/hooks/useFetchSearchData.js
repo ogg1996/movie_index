@@ -14,9 +14,7 @@ export function useFetchSearchData(title) {
       .then((res) => res.json())
       .then((res) => {
         setData(res.results);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
+        setLoading(false);
       })
       .catch((err) => setError(err));
   }, [title]);

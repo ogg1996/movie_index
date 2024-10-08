@@ -17,7 +17,7 @@ export function useFetchMovieIdData(movieId) {
         // skeleton ui 확인을 위해 1초 딜레이를 줌
         setTimeout(() => {
           setLoading(false);
-        }, 1000);
+        }, 500);
       })
       .catch((err) => setError(err));
   }, []);

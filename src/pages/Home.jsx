@@ -8,7 +8,6 @@ import { useFetchTopMovieData } from "../hooks/useFetchTopMovieData";
 import { useWindowWidthSize } from "../hooks/useWindowWidthSize";
 import { useFetchMovieListData } from "../hooks/useFetchMovieListData";
 import MovieCard from "../components/MovieCard";
-import loading from "../assets/loading.png";
 
 export default function Home() {
   let ranking = 0;
@@ -27,8 +26,8 @@ export default function Home() {
         인기 TOP 20!
       </div>
       {topMovieLoading ? (
-        <div className="h-[400px] flex items-center">
-          <img src={loading} className="animate-spin w-[100px] h-[100px]" />
+        <div className="h-[400px] text-[30px] font-bold flex items-center">
+          Loading...
         </div>
       ) : (
         <Swiper
@@ -52,8 +51,8 @@ export default function Home() {
         영화 목록
       </div>
       {movieListLoading ? (
-        <div className="h-[400px] flex items-center">
-          <img src={loading} className="animate-spin w-[100px] h-[100px]" />
+        <div className="h-[400px] text-[30px] font-bold flex items-center">
+          Loading...
         </div>
       ) : (
         <div className="max-w-[940px] flex flex-wrap gap-[10px] justify-center">

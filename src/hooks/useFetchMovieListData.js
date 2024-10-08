@@ -35,10 +35,7 @@ export function useFetchMovieListData() {
       .then((res) => res.json())
       .then((res) => {
         setData((prev) => [...prev, ...res.results]);
-        // 로딩을 보여주기 위해 딜레이
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
+        setLoading(false);
       })
       .catch((err) => setError(err));
   }
