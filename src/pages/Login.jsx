@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import supabase from "../scripts/supabaseClient";
 
-export default function Login({ setSession }) {
+export default function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {
@@ -46,21 +46,17 @@ export default function Login({ setSession }) {
   };
 
   const handleKakaoLogin = async () => {
-    event.preventDefault(); // 기본 동작 방지
-
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "kakao",
       options: {
-        skipBrowserRedirect: true, // 팝업 방식으로 로그인 처리
+        redirectTo: "http://localhost:5173/", // 인증 후 리다이렉트될 로컬 URL
       },
     });
 
     if (error) {
-      console.error("Error during Kakao login:", error);
+      console.error(error.message);
     } else {
-      setSession(data);
-      alert("카카오 로그인");
-      navigate("/");
+      console.log(data);
     }
   };
 
